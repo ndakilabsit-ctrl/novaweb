@@ -1,0 +1,166 @@
+<html>
+<head>
+<title>Nove cart</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- REGISTER -->
+<div id="registerBox" class="auth">
+
+<h2>Create Account</h2>
+
+<input type="text" id="regUser" placeholder="Username">
+<input type="email" id="regEmail" placeholder="Email">
+<input type="text" id="regNumber" placeholder="Phone Number">
+<input type="number" id="regAge" placeholder="Age">
+<input type="text" id="regAddress" placeholder="Address">
+
+<div class="passwordField">
+<input type="password" id="regPass" placeholder="Password" onkeyup="checkPassword()">
+<button type="button" onclick="togglePassword()" class="toggleBtn">Show</button>
+</div>
+
+<p id="strength"></p>
+
+<button onclick="register()">Register</button>
+
+<p>Already have account?</p>
+
+<button onclick="showLogin()">Login</button>
+
+</div>
+
+
+<!-- LOGIN -->
+<div id="loginBox" class="auth" style="display:none">
+
+<h2>Login</h2>
+
+<input type="text" id="loginUser" placeholder="Username">
+<input type="password" id="loginPass" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<p>No account?</p>
+<button onclick="showRegister()">Register</button>
+
+</div>
+
+
+<!-- SHOP -->
+<div id="shop" style="display:none">
+
+<header>
+
+ <button onclick="showProfile()">Profile</button>
+<button onclick="toggleDark()">🌙</button>
+
+<h2>MyShop</h2>
+
+<input type="text" id="search" placeholder="Search product..." onkeyup="searchProduct()">
+
+<div class="cartIcon" onclick="toggleCartPreview()">
+🛒 <span id="cartCount">0</span>
+<div id="cartPreview" class="cartPreview"></div>
+</div>
+
+<button onclick="showCart()">Cart</button>
+<button onclick="logout()">Logout</button>
+
+</header>
+
+<div class="products" id="productList"></div>
+
+</div>
+
+
+<!-- CART PAGE -->
+<div id="cartPage" style="display:none">
+
+<h2>Your Cart</h2>
+
+<table class="cartTable">
+
+<thead>
+<tr>
+<th>Product</th>
+<th>Unit Price</th>
+<th>Quantity</th>
+<th>Total</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="cartItems"></tbody>
+
+</table>
+
+<h3>Total: $<span id="cartTotal">0</span></h3>
+
+<button onclick="checkout()">Checkout</button>
+<button onclick="backToShop()">Back to Shop</button>
+
+</div>
+
+
+<!-- CHECKOUT PAGE -->
+<div id="checkoutPage" style="display:none">
+
+<h2>Checkout</h2>
+
+<div id="checkoutItems"></div>
+
+<h3>Total: $<span id="checkoutTotal"></span></h3>
+
+<button onclick="showPayment()">Proceed to Payment</button>
+<button onclick="showCart()">Back to Cart</button>
+
+</div>
+
+
+<!-- PAYMENT PAGE -->
+<div id="paymentPage" style="display:none">
+
+<h2>Payment</h2>
+
+<p>Select Payment Method:</p>
+
+<button onclick="payNow('GCash')">GCash</button>
+<button onclick="payNow('PayPal')">PayPal</button>
+<button onclick="payNow('Credit Card')">Credit Card</button>
+
+</div>
+
+<div id="ordersPage" style="display:none">
+
+<h2>Order History</h2>
+
+<div id="orderList"></div>
+
+<button onclick="backToShop()">Back to Shop</button>
+
+</div>
+
+<div id="profilePage" style="display:none">
+
+<h2>User Profile</h2>
+
+<p><b>Username:</b> <span id="profileUser"></span></p>
+<p><b>Email:</b> <span id="profileEmail"></span></p>
+<p><b>Phone:</b> <span id="profileNumber"></span></p>
+<p><b>Age:</b> <span id="profileAge"></span></p>
+<p><b>Address:</b> <span id="profileAddress"></span></p>
+
+<button onclick="backToShop()">Back to Shop</button>
+
+</div>
+
+<div id="notify"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
