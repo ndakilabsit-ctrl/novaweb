@@ -1,163 +1,315 @@
-<html>
-<head>
-<title>Nove cart</title>
-<link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-
-<div id="registerBox" class="auth">
-
-<h2>Create Account</h2>
-
-<input type="text" id="regUser" placeholder="Username">
-<input type="email" id="regEmail" placeholder="Email">
-<input type="text" id="regNumber" placeholder="Phone Number">
-<input type="number" id="regAge" placeholder="Age">
-<input type="text" id="regAddress" placeholder="Address">
-
-<div class="passwordField">
-<input type="password" id="regPass" placeholder="Password" onkeyup="checkPassword()">
-<button type="button" onclick="togglePassword()" class="toggleBtn">Show</button>
-</div>
-
-<p id="strength"></p>
-
-<button onclick="register()">Register</button>
-
-<p>Already have account?</p>
-
-<button onclick="showLogin()">Login</button>
-
-</div>
-
-
-<div id="loginBox" class="auth" style="display:none">
-
-<h2>Login</h2>
-
-<input type="text" id="loginUser" placeholder="Username">
-<input type="password" id="loginPass" placeholder="Password">
-
-<button onclick="login()">Login</button>
-
-<p>No account?</p>
-<button onclick="showRegister()">Register</button>
-
-</div>
-
-
-<div id="shop" style="display:none">
-
-<header>
-
- <button onclick="showProfile()">Profile</button>
-<button onclick="toggleDark()">🌙</button>
-
-<h2>MyShop</h2>
-
-<input type="text" id="search" placeholder="Search product..." onkeyup="searchProduct()">
-
-<div class="cartIcon" onclick="toggleCartPreview()">
-🛒 <span id="cartCount">0</span>
-<div id="cartPreview" class="cartPreview"></div>
-</div>
-
-<button onclick="showCart()">Cart</button>
-<button onclick="logout()">Logout</button>
-
-</header>
-
-<div class="products" id="productList"></div>
-
-</div>
-
-
-<div id="cartPage" style="display:none">
-
-<h2>Your Cart</h2>
-
-<table class="cartTable">
-
-<thead>
-<tr>
-<th>Product</th>
-<th>Unit Price</th>
-<th>Quantity</th>
-<th>Total</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody id="cartItems"></tbody>
-
-</table>
-
-<h3>Total: $<span id="cartTotal">0</span></h3>
-
-<button onclick="checkout()">Checkout</button>
-<button onclick="backToShop()">Back to Shop</button>
-
-</div>
-
-
-
-<div id="checkoutPage" style="display:none">
-
-<h2>Checkout</h2>
-
-<div id="checkoutItems"></div>
-
-<h3>Total: $<span id="checkoutTotal"></span></h3>
-
-<button onclick="showPayment()">Proceed to Payment</button>
-<button onclick="showCart()">Back to Cart</button>
-
-</div>
-
-
-
-<div id="paymentPage" style="display:none">
-
-<h2>Payment</h2>
-
-<p>Select Payment Method:</p>
-
-<button onclick="payNow('GCash')">GCash</button>
-<button onclick="payNow('PayPal')">PayPal</button>
-<button onclick="payNow('Credit Card')">Credit Card</button>
-
-</div>
-
-<div id="ordersPage" style="display:none">
-
-<h2>Order History</h2>
-
-<div id="orderList"></div>
-
-<button onclick="backToShop()">Back to Shop</button>
-
-</div>
-
-<div id="profilePage" style="display:none">
-
-<h2>User Profile</h2>
-
-<p><b>Username:</b> <span id="profileUser"></span></p>
-<p><b>Email:</b> <span id="profileEmail"></span></p>
-<p><b>Phone:</b> <span id="profileNumber"></span></p>
-<p><b>Age:</b> <span id="profileAge"></span></p>
-<p><b>Address:</b> <span id="profileAddress"></span></p>
-
-<button onclick="backToShop()">Back to Shop</button>
-
-</div>
-
-<div id="notify"></div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-
+body{
+font-family:Arial;
+margin:0;
+background:#f5f5f5;
+}
+
+header{
+background:#ee4d2d;
+color:white;
+padding:15px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+position:relative;
+}
+
+header input{
+width:40%;
+padding:10px;
+border:none;
+border-radius:5px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+padding:20px;
+}
+
+.product{
+background:white;
+padding:15px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 0 5px gray;
+}
+
+.product img{
+width:100%;
+}
+
+button{
+background:#ee4d2d;
+color:white;
+border:none;
+padding:10px;
+border-radius:5px;
+cursor:pointer;
+margin:5px;
+}
+
+button:hover{
+background:#d73211;
+}
+
+/* Footer */
+.siteFooter{
+  width:100%;
+  background:#ee4d2d;
+  color:white;
+  padding:15px 10px;
+  box-sizing:border-box;
+  text-align:center;
+  position:fixed;
+  bottom:0;
+  left:0;
+}
+
+.siteFooter a{
+  color:white;
+  text-decoration:none;
+  opacity:0.85;
+}
+
+.siteFooter a:hover{
+  opacity:1;
+  text-decoration:underline;
+}
+
+body{
+  margin-bottom:80px;
+}
+
+.auth{
+text-align:center;
+margin-top:100px;
+}
+
+.auth input,
+header input,
+#search {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 320px;
+  max-width: 90%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.auth input:focus,
+header input:focus,
+#search:focus {
+  outline: none;
+  border-color: #ee4d2d;
+  box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.2);
+}
+
+.cartIcon{
+font-size:20px;
+font-size:20px;
+cursor:pointer;
+position:relative;
+}
+
+
+#cartPage{
+padding:20px;
+}
+
+.passwordField {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  margin: 10px auto;
+}
+
+.passwordField input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 48px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  position: relative; 
+  z-index: 1; 
+}
+
+.passwordField .toggleBtn {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  color: #444;
+  font-size: 18px;
+}
+
+.passwordField .toggleBtn::before {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 10px;
+  border: 2px solid #444;
+  border-radius: 10px / 6px;
+  position: relative;
+}
+
+.passwordField .toggleBtn::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #444;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+}
+
+.passwordField .toggleBtn.visible::after {
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.passwordField .toggleBtn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Hide browser-native password reveal icons */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-textfield-decoration-container {
+  display: none !important;
+}
+
+.product img{
+width:100%;
+height:150px;
+object-fit:cover;
+}
+
+.product button{
+display:block;
+width:100%;
+margin-top:10px;
+}
+
+.cartTable{
+width:100%;
+background:white;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+.cartTable th,
+.cartTable td{
+padding:15px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
+
+.cartProduct{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.cartProduct img{
+width:60px;
+height:60px;
+object-fit:cover;
+}
+
+.qtyBtn{
+padding:5px 10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.removeBtn{
+background:red;
+}
+
+.cartPreview{
+position:absolute;
+top:60px;
+right:20px;
+width:250px;
+background:white;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
+padding:10px;
+display:none;
+z-index:100;
+}
+
+.cartPreview img{
+width:40px;
+height:40px;
+object-fit:cover;
+margin-right:10px;
+}
+
+.cartPreviewItem{
+display:flex;
+align-items:center;
+margin-bottom:10px;
+}
+
+#cartCount{
+background:red;
+color:white;
+border-radius:50%;
+padding:2px 6px;
+font-size:12px;
+margin-left:5px;
+}
+
+.rating span{
+cursor:pointer;
+font-size:18px;
+}
+
+.dark{
+background:#111;
+color:white;
+}
+
+.dark .product{
+background:#222;
+color:white;
+}
+
+.dark header{
+background:black;
+}
+#notify{
+position:fixed;
+top:20px;
+right:20px;
+background:#333;
+color:white;
+padding:15px;
+border-radius:5px;
+display:none;
+}
